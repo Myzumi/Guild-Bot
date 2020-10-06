@@ -14,3 +14,19 @@ A Guild Bot for Hypixel Skyblock, Requires a Minecraft accaunt that is also in t
 - Must be in the Guild
 - Must have /setrank Permissions
 - (Optimal) Has Officer Chat Permssions
+
+# Config
+The config has everythign it needs!
+
+- Prefix
+  The bot Prefix for discord
+- Home
+  The name of the Housing on the accaunt (REQUIRED!)
+- DevID
+  The ID of the owner of the bot, gives access to dev only commands
+- GuildID
+  The ID of the guild
+- GuildChat
+  The ID of the Guild Chat where messages should be posted
+- OfficerChat
+  The id of the Officer Chat where the messages should be posted
