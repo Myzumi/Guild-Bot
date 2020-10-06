@@ -19,14 +19,14 @@ A Guild Bot for Hypixel Skyblock, Requires a Minecraft accaunt that is also in t
 The config has everythign it needs!
 
 - Prefix
-  The bot Prefix for discord
+  - The bot Prefix for discord
 - Home
-  The name of the Housing on the accaunt (REQUIRED!)
+  - The name of the Housing on the accaunt (REQUIRED!)
 - DevID
-  The ID of the owner of the bot, gives access to dev only commands
+  - The ID of the owner of the bot, gives access to dev only commands
 - GuildID
-  The ID of the guild
+  - The ID of the guild
 - GuildChat
-  The ID of the Guild Chat where messages should be posted
+  - The ID of the Guild Chat where messages should be posted
 - OfficerChat
-  The id of the Officer Chat where the messages should be posted
+  - The id of the Officer Chat where the messages should be posted
