@@ -1,0 +1,22 @@
+{
+  "name": "dumo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "crypto-random-string": "^3.3.0",
+    "discord.js": "^12.3.1",
+    "dotenv": "^8.2.0",
+    "fs": "^0.0.1-security",
+    "hypixel-api": "^1.2.0",
+    "mineflayer": "^2.29.1",
+    "mojangjs": "^2.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node bot.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
