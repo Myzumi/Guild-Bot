@@ -10,7 +10,7 @@
     "dotenv": "^8.2.0",
     "fs": "^0.0.1-security",
     "hypixel-api": "^1.2.0",
-    "mineflayer": "^3.3.3",
+    "mineflayer": "^3.4.0",
     "mojangjs": "^2.0.3"
   },
   "devDependencies": {},
