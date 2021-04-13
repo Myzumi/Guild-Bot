@@ -1,3 +1,6 @@
+# Status
+The current Repo is most likely outdated but i plan to update it again to make it more stable and adding more stuff :)
+
 # Guild-Bot
 A Guild Bot for Hypixel Skyblock, Requires a Minecraft accaunt that is also in the guild and has /setrank permissions
 
