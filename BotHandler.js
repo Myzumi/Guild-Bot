@@ -28,15 +28,21 @@ function createbot(client) {
   });
 
   bot.on("message", (message) => {
-    // console.log(message)
+    // Logs chat to console in colours
+    console.log(chatMsg.toAnsi());
+    // If in lobby, send to Limbo
+    const msg = chatMsg.toString();
+    if (msg.endsWith(' joined the lobby!') && msg.includes('[MVP+')) {
+      console.log('Lobby detected: Sending to Limbo.');
+      minebot.chat('/ac \u00a7ca');
   });
 
   bot.on("login", () => {
     console.log('Logged in')
     // client.bothandlerstatus = "Online!"
     setTimeout(() => {
-      bot.chat(`/home ${config.home}`);
-      console.log("At housing");
+      bot.chat('/ac \u00a7c<3');
+      console.log("In Limbo.");
     }, 15000);
   });
   bot.on("error", (err) => {
