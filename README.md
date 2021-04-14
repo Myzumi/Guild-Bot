@@ -1,25 +1,25 @@
 # Status
-The current Repo is most likely outdated but i plan to update it again to make it more stable and adding more stuff :)
+The current repo is most likely outdated but I plan to update it again to make it more stable and adding more stuff :)
 
 # Guild-Bot
-A Guild Bot for Hypixel Skyblock, Requires a Minecraft accaunt that is also in the guild and has /setrank permissions
+A Guild Bot for Hypixel Skyblock requires a Minecraft account that is also in the guild and has /g setrank permissions.
 
 # Features
 
-- Send Ingame Guild Messages into a discord channel
-- Send Ingame Officer Messages into a seperate discord channel
-- WIP Role and Rank Sync
-- WIP Send messages back to ingame (Toggleable)
+- Send Ingame Guild Messages into a Discord channel
+- Send Ingame Officer Messages into a separate Discord channel
+- WIP: Role and Rank Sync
+- WIP: Send messages back to in-game (toggleable)
 
 # Requirements
 
-- A Minecraft accaunt with full access
-- Must be in the Guild
-- Must have /setrank Permissions
-- (Optimal) Has Officer Chat Permssions
+- A Minecraft account with full access
+- Must be in the guild
+- Must have /g setrank Permissions
+- (Optional) Must have officer chat permissions
 
 # Config
-The config has everythign it needs!
+The config has everything it needs!
 
 - Prefix
   - The bot Prefix for discord
@@ -30,6 +30,6 @@ The config has everythign it needs!
 - GuildID
   - The ID of the guild
 - GuildChat
-  - The ID of the Guild Chat where messages should be posted
+  - The ID of the guild chat where messages should be posted
 - OfficerChat
-  - The id of the Officer Chat where the messages should be posted
+  - The ID of the officer chat where the messages should be posted
