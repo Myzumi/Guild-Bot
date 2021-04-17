@@ -23,8 +23,6 @@ The config has everything it needs!
 
 - Prefix
   - The bot Prefix for discord
-- Home
-  - The name of the Housing on the account (REQUIRED!)
 - DevID
   - The ID of the owner of the bot, gives access to dev only commands
 - GuildID

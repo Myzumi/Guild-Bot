@@ -1,93 +1,118 @@
-const minecraft = require("mineflayer");
-const chalk = require("chalk");
-const fs = require("fs");
-const Discord = require("discord.js");
-const config = require("./config.json");
-const mcapi = require("mojangjs");
-const roles = require("./roles.json");
-const HypixelAPI = require("hypixel-api");
-require("dotenv").config();
-const hypixel = new HypixelAPI(process.env.apikey1);
+const minecraft = require('mineflayer');
+const config = require('./config.json');
+const chalk = require('chalk');
+const hypixelapi = require('hypixel-api');
+const Discord = require('discord.js');
+const RegexHandler = require('./RegexHandler');
+require('dotenv').config();
 let bot = null;
-const keygen2 = require("crypto-random-string");
+let cd = [];
+/**
+ *
+ * @param {Discord.Client} client
+ * @param {hypixelapi} api
+ */
 
-// file deepcode ignore javascript%2Fdc_interfile_project%2FRegExpBadCharRange: <please specify a reason of ignoring this>
-// file deepcode ignore javascript%2Fdc_interfile_project%2FRegExpBadCharRange: <please specify a reason of ignoring this>
-// file deepcode ignore PromiseNotCaughtNode: <please specify a reason of ignoring this>
+async function removeItemOnce(arr, value) {
+  var index = arr.indexOf(value);
+  if (index > -1) {
+    arr.splice(index, 1);
+  }
+  return arr;
+}
 
-function createbot(client) {
-  //  client = client
-
-  console.log("Login in bot");
+async function createbot(client, api) {
+  console.log('Login in bot');
   bot = minecraft.createBot({
-    host: "mc.hypixel.net",
+    host: 'mc.hypixel.net',
     port: 25565,
     username: process.env.minecraftusername,
     password: process.env.minecraftpsw,
-    version: "1.13.2",
+    version: '1.13.2',
   });
+  async function rejoinLimbo() {
+    console.log('Trying to send to Limbo');
+    bot.chat(`/ac \u00a7c<3`);
+    // Add a check if in Lobby -> HPAPI
+    console.log('In Limbo');
+    if (cd.includes('recon')) cd = await removeItemOnce(cd, 'recon');
+  }
+  bot.on('message', (message) => {});
 
-  bot.on("message", (message) => {
-    // console.log(message)
-  });
-
-  bot.on("login", () => {
-    console.log('Logged in')
-    // client.bothandlerstatus = "Online!"
+  bot.on('login', () => {
+    console.log('Logged in');
+    // replace Housing to Limbo | PR [29]
     setTimeout(() => {
-      bot.chat(`/home ${config.home}`);
-      console.log("At housing");
+      rejoinLimbo();
     }, 15000);
   });
-  bot.on("error", (err) => {
+  bot.on('error', (err) => {
     console.log(err);
   });
 
   bot.chatAddPattern(
-    // From [VIP] Player: gBa1b2n3h4j5u6i7o4
-    /^Guild > (\[.*?\])*.*? ([\w\d]{2,17}).*?( \[.*?\])*.*?: (\w*[A-z0-9_ \.\,;:\-_\/]{1,10000})*$/i,
-    "guild_chat",
-    "Custom chat event"
+    // Guild > [VIP] Player: gBa1b2n3h4j5u6i7o4
+    RegexHandler.regex_guildchat,
+    'guild_chat',
+    'Custom chat event'
   );
   bot.chatAddPattern(
-    // From [VIP] Player: gBa1b2n3h4j5u6i7o4
-    /^Officer > (\[.*?\])*.*? ([\w\d]{2,17}).*?( \[.*?\])*.*?: (\w*[A-z0-9_ \.\,;:\-_\/]{1,10000})*$/i,
-    "officer_chat",
-    "Custom chat event"
+    // Officer > [VIP] Player: gBa1b2n3h4j5u6i7o4
+    RegexHandler.regex_officerchat,
+    'officer_chat',
+    'Custom chat event'
   );
-    	
-  bot.on("guild_chat", (rank, username, grank, message) => {
-    sendGuildChatToDiscord(rank, username,grank, message)
+  bot.chatAddPattern(
+    // [VIP] Player joined the lobby!
+    RegexHandler.regex_lobbyjoin,
+    'in_lobby',
+    'Custom chat event'
+  );
+
+  bot.on('in_lobby', () => {
+    if (cd.includes('recon')) return;
+    cd.push('recon');
+    console.log(
+      chalk.redBright('Bot is outside of Limbo, trying to send to limbo again')
+    );
+    rejoinLimbo();
   });
 
-  bot.on("officer_chat", (rank, username, grank, message) => {
-    sendOfficerChatToDiscord(rank, username,grank, message)
+  bot.on('guild_chat', (rank, username, grank, message) => {
+    sendGuildChatToDiscord(rank, username, grank, message);
   });
 
-  function sendGuildChatToDiscord(rank, username, grank, message) {
+  bot.on('officer_chat', (rank, username, grank, message) => {
+    sendOfficerChatToDiscord(rank, username, grank, message);
+  });
+
+  async function sendGuildChatToDiscord(rank, username, grank, message) {
     if (grank === '' || grank === undefined) {
-      client.guilds.cache.get(config.guildid).channels.cache.get(config.guildchat).send(`Guild > ${rank} ${username}: ${message}`)
-    }else {
-      client.guilds.cache.get(config.guildid).channels.cache.get(config.guildchat).send(`Guild > ${rank} ${username}${grank}: ${message}`)
+      client.guilds.cache
+        .get(config.guildid)
+        .channels.cache.get(config.guildchat)
+        .send(`Guild > ${rank} ${username}: ${message}`);
+    } else {
+      client.guilds.cache
+        .get(config.guildid)
+        .channels.cache.get(config.guildchat)
+        .send(`Guild > ${rank} ${username}${grank}: ${message}`);
     }
   }
 
-  function sendOfficerChatToDiscord(rank, username, grank, message) {
+  async function sendOfficerChatToDiscord(rank, username, grank, message) {
     if (grank === '' || grank === undefined) {
-      client.guilds.cache.get(config.guildid).channels.cache.get(config.officerchat).send(`Officer > ${rank} ${username}: ${message}`)
-    }else {
-      client.guilds.cache.get(config.guildid).channels.cache.get(config.officerchat).send(`Officer > ${rank} ${username}${grank}: ${message}`)
+      client.guilds.cache
+        .get(config.guildid)
+        .channels.cache.get(config.officerchat)
+        .send(`Officer > ${rank} ${username}: ${message}`);
+    } else {
+      client.guilds.cache
+        .get(config.guildid)
+        .channels.cache.get(config.officerchat)
+        .send(`Officer > ${rank} ${username}${grank}: ${message}`);
     }
   }
-}
-
-function AddNormalChatListener() {
-  bot.chatAddPattern(
-    // From [VIP] Player: gBa1b2n3h4j5u6i7o4
-    /(.)/,
-    "normal_chat",
-    "Custom chat event"
-  );
 }
 
 exports.createbot = createbot;
