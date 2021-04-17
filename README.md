@@ -16,6 +16,7 @@ A Guild Bot for Hypixel Skyblock requires a Minecraft account that is also in th
 - A Minecraft account with full access
 - Must be in the guild
 - Must have /g setrank Permissions
+- Have a Hypixel API set in the .env
 - (Optional) Must have officer chat permissions
 
 # Config
